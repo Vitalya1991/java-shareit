@@ -71,10 +71,10 @@ public class UserServiceImpl implements UserService {
     private void checkUniqueEmail(String email, Long userId) {
         for (User user : userMap.values()) {
             if (user.getEmail().equals(email)) {
-                if(!Objects.equals(user.getId(), userId)){
-                throw new RuntimeException("Пользователь с данной почтой уже зарегестрирован");
+                if (!Objects.equals(user.getId(), userId)) {
+                    throw new RuntimeException("Пользователь с данной почтой уже зарегестрирован");
+                }
             }
         }
     }
-}
 }

@@ -9,10 +9,7 @@ import ru.practicum.shareit.user.dto.UserRequestDto;
 import ru.practicum.shareit.user.dto.UserResponseDto;
 import ru.practicum.shareit.user.service.UserService;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -73,9 +70,11 @@ public class UserServiceImpl implements UserService {
 
     private void checkUniqueEmail(String email, Long userId) {
         for (User user : userMap.values()) {
-            if (user.getEmail().equals(email) && user.getId() != userId) {
+            if (user.getEmail().equals(email)) {
+                if(!Objects.equals(user.getId(), userId)){
                 throw new RuntimeException("Пользователь с данной почтой уже зарегестрирован");
             }
         }
     }
+}
 }

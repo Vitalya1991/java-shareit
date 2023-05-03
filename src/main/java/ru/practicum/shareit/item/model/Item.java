@@ -4,9 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
+import lombok.Builder;
 
 @Getter
 @Setter
+@Builder
 public class Item {
     private Long id;
     private String name;

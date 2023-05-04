@@ -1,6 +1,5 @@
 package ru.practicum.shareit.user.storage;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.user.User;
@@ -14,8 +13,6 @@ import java.util.*;
 @Slf4j
 public class UserStorageImpl implements UserStorage {
     private Long id = 1L;
-    @Getter
-    private final Map<Long, User> userMap = new HashMap<>();
 
     @Override
     public UserResponseDto addUser(UserRequestDto userRequestDto) {
@@ -59,6 +56,11 @@ public class UserStorageImpl implements UserStorage {
     public List<UserResponseDto> getUsers() {
         log.debug("Найдены все пользователи");
         return UserMapper.toUserResponseDtoList(userMap.values());
+    }
+
+    @Override
+    public Map<Long, User> getUserMap() {
+        return userMap;
     }
 
     private void checkUserExistsById(Long userId) {

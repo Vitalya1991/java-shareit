@@ -2,21 +2,14 @@ package ru.practicum.shareit.item.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.item.dto.ItemMapper;
 import ru.practicum.shareit.item.dto.ItemRequestDto;
 import ru.practicum.shareit.item.dto.ItemResponseDto;
-import ru.practicum.shareit.item.exceptions.ItemNotFoundException;
-import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
 import ru.practicum.shareit.item.storage.ItemStorage;
-import ru.practicum.shareit.user.exceptions.UserNotFoundException;
-import ru.practicum.shareit.user.service.UserService;
-import ru.practicum.shareit.user.storage.UserStorage;
+
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service

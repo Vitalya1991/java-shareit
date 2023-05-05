@@ -12,6 +12,7 @@ import java.util.*;
 @Repository
 @Slf4j
 public class UserStorageImpl implements UserStorage {
+    private final Map<Long, User> userMap = new HashMap<>();
     private Long id = 1L;
 
     @Override
@@ -20,7 +21,7 @@ public class UserStorageImpl implements UserStorage {
         checkUniqueEmail(user.getEmail(), id);
         user.setId(id);
         id++;
-        userMap.put(user.getId(), user);
+        getUserMap().put(user.getId(), user);
         log.debug("Пользователь с id= {} добавлен", user.getId());
         return UserMapper.toUserResponseDto(user);
     }

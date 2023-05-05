@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserStorage {
-    Map<Long, User> userMap = new HashMap<>();
 
     UserResponseDto addUser(UserRequestDto userRequestDto);
 

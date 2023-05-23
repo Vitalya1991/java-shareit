@@ -24,6 +24,7 @@ public class Item {
     @Column(nullable = false, length = 100)
     private String description;
 
+    @JsonProperty("available")
     @Column
     private Boolean available;
 

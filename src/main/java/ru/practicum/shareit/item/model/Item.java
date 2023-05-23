@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import ru.practicum.shareit.user.model.User;
@@ -23,7 +24,7 @@ public class Item {
     @Column(nullable = false, length = 100)
     private String description;
 
-    @Column(nullable = false)
+    @Column
     private Boolean available;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)

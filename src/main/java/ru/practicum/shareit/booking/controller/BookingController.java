@@ -24,7 +24,7 @@ public class BookingController {
     }
 
     @PatchMapping("/{bookingId}")
-    public BookingResponseDto updateBooking(@RequestHeader(header) Long userId,
+    public BookingResponseDto updateBooking(@Positive @RequestHeader(header) Long userId,
                                             @Positive @PathVariable Long bookingId,
                                             @RequestParam Boolean approved) {
         return bookingServiceImpl.updateBooking(userId, bookingId, approved);
@@ -39,14 +39,14 @@ public class BookingController {
     @GetMapping
     public Iterable<BookingResponseDto> getBookingsByUserId(
             @Positive @RequestHeader(header) Long userId,
-            @RequestParam(required = false, defaultValue = "ALL") String state) {
+            @RequestParam(defaultValue = "ALL") String state) {
         return bookingServiceImpl.getBookingsByUserId(userId, state);
     }
 
     @GetMapping("/owner")
     public Iterable<BookingResponseDto> getBookingsByOwnerId(
             @Positive @RequestHeader(header) Long userId,
-            @RequestParam(required = false, defaultValue = "ALL") String state) {
+            @RequestParam(defaultValue = "ALL") String state) {
         return bookingServiceImpl.getBookingsByOwnerId(userId, state);
     }
 }

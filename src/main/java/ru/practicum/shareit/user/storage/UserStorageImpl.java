@@ -1,82 +1,70 @@
 package ru.practicum.shareit.user.storage;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
-import ru.practicum.shareit.user.User;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.dto.UserMapper;
 import ru.practicum.shareit.user.dto.UserRequestDto;
 import ru.practicum.shareit.user.dto.UserResponseDto;
+import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.user.repository.UserJpaRepository;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
-@Repository
 @Slf4j
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserStorageImpl implements UserStorage {
-    private final Map<Long, User> userMap = new HashMap<>();
-    private Long id = 1L;
+    private final UserJpaRepository userJpaRepository;
 
     @Override
+    @Transactional
     public UserResponseDto addUser(UserRequestDto userRequestDto) {
-        User user = UserMapper.fromUserRequestDto(userRequestDto);
-        checkUniqueEmail(user.getEmail(), id);
-        user.setId(id);
-        id++;
-        getUserMap().put(user.getId(), user);
+        User user = userJpaRepository.save(UserMapper.fromUserRequestDto(userRequestDto));
         log.debug("Пользователь с id= {} добавлен", user.getId());
         return UserMapper.toUserResponseDto(user);
     }
 
     @Override
+    @Transactional
     public UserResponseDto updateUser(UserRequestDto userRequestDto, Long userId) {
         checkUserExistsById(userId);
-        checkUniqueEmail(userRequestDto.getEmail(), userId);
-        User user = userMap.get(userId);
-        Optional.ofNullable(userRequestDto.getEmail()).ifPresent(user::setEmail);
+        User user = userJpaRepository.getReferenceById(userId);
         Optional.ofNullable(userRequestDto.getName()).ifPresent(user::setName);
-        userMap.put(userId, user);
+        Optional.ofNullable(userRequestDto.getEmail()).ifPresent(user::setEmail);
+        User updateUser = userJpaRepository.save(user);
         log.debug("Обновлен пользователь с id = {}", userId);
-        return UserMapper.toUserResponseDto(user);
+        return UserMapper.toUserResponseDto(updateUser);
     }
-
 
     @Override
     public UserResponseDto getUserById(Long userId) {
         checkUserExistsById(userId);
         log.debug("Получен пользователь с id = {}", userId);
-        return UserMapper.toUserResponseDto(userMap.get(userId));
+        return UserMapper.toUserResponseDto(userJpaRepository.getReferenceById(userId));
     }
 
     @Override
+    @Transactional
     public void deleteUserById(Long userId) {
         checkUserExistsById(userId);
-        userMap.remove(userId);
+        userJpaRepository.deleteById(userId);
         log.debug("Удален пользователь с id = {}", userId);
     }
 
     @Override
     public List<UserResponseDto> getUsers() {
         log.debug("Найдены все пользователи");
-        return UserMapper.toUserResponseDtoList(userMap.values());
-    }
-
-    @Override
-    public Map<Long, User> getUserMap() {
-        return userMap;
+        return UserMapper.toUserResponseDtoList(userJpaRepository.findAll());
     }
 
     private void checkUserExistsById(Long userId) {
-        if (!userMap.containsKey(userId)) {
-            throw new RuntimeException("Пользователя с таким id не существует");
-        }
-    }
-
-    private void checkUniqueEmail(String email, Long userId) {
-        for (User user : userMap.values()) {
-            if (user.getEmail().equals(email)) {
-                if (!Objects.equals(user.getId(), userId)) {
-                    throw new RuntimeException("Пользователь с данной почтой уже зарегестрирован");
-                }
-            }
+        if (!userJpaRepository.existsById(userId)) {
+            throw new NotFoundException("Пользователя с таким id не существует");
         }
     }
 }

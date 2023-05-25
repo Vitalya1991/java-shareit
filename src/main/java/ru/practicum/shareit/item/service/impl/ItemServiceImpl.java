@@ -3,13 +3,11 @@ package ru.practicum.shareit.item.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.item.dto.ItemRequestDto;
-import ru.practicum.shareit.item.dto.ItemResponseDto;
+import ru.practicum.shareit.item.dto.*;
 import ru.practicum.shareit.item.service.ItemService;
 import ru.practicum.shareit.item.storage.ItemStorage;
 
-
-import java.util.*;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -29,17 +27,22 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemResponseDto getItemById(Long itemId, Long userId) {
+    public ItemWithBookingsResponseDto getItemById(Long itemId, Long userId) {
         return itemStorage.getItemById(itemId, userId);
     }
 
     @Override
-    public List<ItemResponseDto> getUserItems(Long userId) {
+    public List<ItemWithBookingsResponseDto> getUserItems(Long userId) {
         return itemStorage.getUserItems(userId);
     }
 
     @Override
     public List<ItemResponseDto> searchItemsByText(String text, Long userId) {
         return itemStorage.searchItemsByText(text, userId);
+    }
+
+    @Override
+    public CommentResponseDto postComment(Long userId, Long itemId, CommentRequestDto commentRequestDto) {
+        return itemStorage.postComment(userId, itemId, commentRequestDto);
     }
 }

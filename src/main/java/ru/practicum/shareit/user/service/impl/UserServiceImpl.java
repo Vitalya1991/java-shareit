@@ -2,14 +2,12 @@ package ru.practicum.shareit.user.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.user.dto.UserRequestDto;
 import ru.practicum.shareit.user.dto.UserResponseDto;
 import ru.practicum.shareit.user.service.UserService;
 import ru.practicum.shareit.user.storage.UserStorage;
 
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -45,8 +43,5 @@ public class UserServiceImpl implements UserService {
         return userStorage.getUsers();
     }
 
-    @Override
-    public Map<Long, User> getUserMap() {
-        return userStorage.getUserMap();
-    }
+
 }

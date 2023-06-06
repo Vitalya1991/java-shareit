@@ -42,8 +42,7 @@ class UserServiceImplTest {
     @Test
     void testAddUserNotFoundException() {
         when(userJpaRepository.save((User) any())).thenThrow(new NotFoundException("An error occurred"));
-        assertThrows(NotFoundException.class,
-                () -> userServiceImpl.addUser(new UserRequestDto("Name", "jane.doe@example.org")));
+        assertThrows(NotFoundException.class, () -> userServiceImpl.addUser(new UserRequestDto("Name", "jane.doe@example.org")));
         verify(userJpaRepository).save((User) any());
     }
 

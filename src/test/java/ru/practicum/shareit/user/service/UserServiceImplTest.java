@@ -23,10 +23,10 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 class UserServiceImplTest {
     @MockBean
-    private UserJpaRepository userJpaRepository;
+    UserJpaRepository userJpaRepository;
 
     @Autowired
-    private UserStorageImpl userStorageImpl;
+    UserStorageImpl userStorageImpl;
 
     @Test
     void testAddUser() {
@@ -204,7 +204,7 @@ class UserServiceImplTest {
         verify(userJpaRepository).findAll();
     }
 
-    private User createUser() {
+    User createUser() {
         User user = new User();
         user.setEmail("jane.doe@example.org");
         user.setId(1L);

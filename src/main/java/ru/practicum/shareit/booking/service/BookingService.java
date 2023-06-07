@@ -3,6 +3,7 @@ package ru.practicum.shareit.booking.service;
 import ru.practicum.shareit.booking.dto.BookItemRequestDto;
 import ru.practicum.shareit.booking.dto.BookingResponseDto;
 
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 public interface BookingService {
@@ -12,9 +13,9 @@ public interface BookingService {
 
     BookingResponseDto getBookingOnlyForOwnerOrBooker(Long userId, Long bookingId);
 
-    List<BookingResponseDto> getBookingsByUserId(Long userId, String state, Integer from, Integer size);
+    List<BookingResponseDto> getBookingsByUserId(Long userId, String state, @PositiveOrZero Integer from, Integer size);
 
-    Iterable<BookingResponseDto> getBookingsByOwnerId(Integer from, Integer size, Long userId, String state);
+    Iterable<BookingResponseDto> getBookingsByOwnerId(@PositiveOrZero Integer from, Integer size, Long userId, String state);
 
     enum State {
         ALL,

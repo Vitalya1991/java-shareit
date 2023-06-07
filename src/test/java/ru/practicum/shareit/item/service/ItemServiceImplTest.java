@@ -34,22 +34,22 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 class ItemServiceImplTest {
     @MockBean
-    private BookingJpaRepository bookingJpaRepository;
+    BookingJpaRepository bookingJpaRepository;
 
     @MockBean
-    private CommentJpaRepository commentJpaRepository;
+    CommentJpaRepository commentJpaRepository;
 
     @MockBean
-    private ItemJpaRepository itemJpaRepository;
+    ItemJpaRepository itemJpaRepository;
 
     @MockBean
     private ItemRequestJpaRepository itemRequestJpaRepository;
 
     @Autowired
-    private ItemStorageImpl itemStorageImpl;
+    ItemStorageImpl itemStorageImpl;
 
     @MockBean
-    private UserJpaRepository userJpaRepository;
+    UserJpaRepository userJpaRepository;
 
     @Test
     void testAddItem() {
@@ -1012,7 +1012,7 @@ class ItemServiceImplTest {
         verify(itemJpaRepository).existsById((Long) any());
     }
 
-    private User createUser() {
+    User createUser() {
         User user = new User();
         user.setEmail("jane.doe@example.org");
         user.setId(1L);
@@ -1020,7 +1020,7 @@ class ItemServiceImplTest {
         return user;
     }
 
-    private Item createItem(User user, Request request) {
+    Item createItem(User user, Request request) {
         Item item = new Item();
         item.setAvailable(true);
         item.setDescription("The characteristics of someone or something");
@@ -1031,7 +1031,7 @@ class ItemServiceImplTest {
         return item;
     }
 
-    private Request createRequest(User user) {
+    Request createRequest(User user) {
         Request request = new Request();
         request.setDateTimeOfCreate(LocalDateTime.of(1, 1, 1, 1, 1));
         request.setDescription("The characteristics of someone or something");
@@ -1040,7 +1040,7 @@ class ItemServiceImplTest {
         return request;
     }
 
-    private Comment createComment(User user, Item item) {
+    Comment createComment(User user, Item item) {
         Comment comment = new Comment();
         comment.setAuthor(user);
         comment.setId(1L);
@@ -1050,7 +1050,7 @@ class ItemServiceImplTest {
         return comment;
     }
 
-    private Booking createBooking(User user, Item item) {
+    Booking createBooking(User user, Item item) {
         Booking booking = new Booking();
         booking.setBooker(user);
         booking.setEnd(LocalDateTime.of(1, 1, 1, 1, 1));

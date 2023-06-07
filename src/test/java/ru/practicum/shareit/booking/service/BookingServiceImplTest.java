@@ -31,14 +31,14 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class BookingServiceImplTest {
     @Mock
-    private ItemJpaRepository itemJpaRepository;
+    ItemJpaRepository itemJpaRepository;
     @Mock
-    private UserJpaRepository userJpaRepository;
+    UserJpaRepository userJpaRepository;
     @Mock
-    private BookingJpaRepository bookingJpaRepository;
+    BookingJpaRepository bookingJpaRepository;
 
     @InjectMocks
-    private BookingServiceImpl bookingService;
+    BookingServiceImpl bookingService;
 
     @Test
     @DisplayName("should return all bookings for the given user id")
@@ -500,7 +500,7 @@ class BookingServiceImplTest {
         assertEquals(booking.getId(), bookingResponseDto.getId());
     }
 
-    private List<User> createUsers() {
+    List<User> createUsers() {
         User user = new User();
         user.setEmail("jane.doe@example.org");
         user.setId(1L);
@@ -516,7 +516,7 @@ class BookingServiceImplTest {
         return listUsers;
     }
 
-    private Item createItem(User user) {
+    Item createItem(User user) {
         Item item = new Item();
         item.setId(1L);
         item.setName("item");
@@ -526,7 +526,7 @@ class BookingServiceImplTest {
         return item;
     }
 
-    private Booking createBooking(Item item, User user2) {
+    Booking createBooking(Item item, User user2) {
         Booking booking = new Booking();
         booking.setId(1L);
         booking.setStart(LocalDateTime.now().minusDays(1));

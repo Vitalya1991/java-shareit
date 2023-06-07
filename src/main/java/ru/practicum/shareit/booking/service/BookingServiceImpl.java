@@ -96,7 +96,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<BookingResponseDto> getBookingsByUserId(Long userId, String state, Integer from, Integer size) {
         if (from < 0) {
-            throw new RuntimeException("Такого user id не существует");
+            throw new RuntimeException("не допустимое значение from");
         }
         Pageable pageable = PageRequest.of(from / size, size);
         if (!userJpaRepository.existsById(userId)) {
@@ -138,7 +138,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Iterable<BookingResponseDto> getBookingsByOwnerId(Integer from, Integer size, Long userId, String state) {
         if (from < 0) {
-            throw new RuntimeException("Такого user id не существует");
+            throw new RuntimeException("не допустимое значение from");
         }
         Pageable pageable = PageRequest.of(from / size, size);
         if (!userJpaRepository.existsById(userId)) {

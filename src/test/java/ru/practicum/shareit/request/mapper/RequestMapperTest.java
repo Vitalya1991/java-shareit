@@ -123,7 +123,7 @@ class RequestMapperTest {
         verify(itemList).iterator();
     }
 
-    private User createUser() {
+    User createUser() {
         User user = new User();
         user.setEmail("jane.doe@example.org");
         user.setId(1L);
@@ -131,7 +131,7 @@ class RequestMapperTest {
         return user;
     }
 
-    private Request createRequest(User user) {
+    Request createRequest(User user) {
         Request request = new Request();
         request.setDateTimeOfCreate(LocalDateTime.of(1, 1, 1, 1, 1));
         request.setDescription("The characteristics of someone or something");

@@ -27,10 +27,10 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 class BookingControllerTest {
     @Autowired
-    private BookingController bookingController;
+    BookingController bookingController;
 
     @MockBean
-    private BookingService bookingService;
+    BookingService bookingService;
 
     @Test
     void testAddBooking2() {
@@ -142,20 +142,20 @@ class BookingControllerTest {
         actualPerformResult.andExpect(MockMvcResultMatchers.status().is(406));
     }
 
-    private BookingResponseDto.ItemDto createItemDto() {
+    BookingResponseDto.ItemDto createItemDto() {
         BookingResponseDto.ItemDto itemDto = new BookingResponseDto.ItemDto();
         itemDto.setId(1L);
         itemDto.setName("Name");
         return itemDto;
     }
 
-    private BookingResponseDto.UserDto createUserDto() {
+    BookingResponseDto.UserDto createUserDto() {
         BookingResponseDto.UserDto userDto = new BookingResponseDto.UserDto();
         userDto.setId(1L);
         return userDto;
     }
 
-    private BookingResponseDto createBookingResponseDto(BookingResponseDto.UserDto userDto, BookingResponseDto.ItemDto itemDto) {
+    BookingResponseDto createBookingResponseDto(BookingResponseDto.UserDto userDto, BookingResponseDto.ItemDto itemDto) {
         BookingResponseDto bookingResponseDto = new BookingResponseDto();
         bookingResponseDto.setBooker(userDto);
         bookingResponseDto.setEnd(LocalDateTime.of(1, 1, 1, 1, 1));

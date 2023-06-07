@@ -25,10 +25,10 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 class UserControllerTest {
     @Autowired
-    private UserController userController;
+    UserController userController;
 
     @MockBean
-    private UserService userService;
+    UserService userService;
 
     @Test
     void testUpdateUser() throws Exception {

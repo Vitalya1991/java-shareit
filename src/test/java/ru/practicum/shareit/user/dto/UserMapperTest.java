@@ -13,8 +13,7 @@ class UserMapperTest {
 
     @Test
     void testFromUserRequestDto() {
-        User actualFromUserRequestDtoResult = UserMapper
-                .fromUserRequestDto(new UserRequestDto("Name", "jane.doe@example.org"));
+        User actualFromUserRequestDtoResult = UserMapper.fromUserRequestDto(new UserRequestDto("Name", "jane.doe@example.org"));
         assertEquals("jane.doe@example.org", actualFromUserRequestDtoResult.getEmail());
         assertEquals("Name", actualFromUserRequestDtoResult.getName());
     }
@@ -71,7 +70,7 @@ class UserMapperTest {
         assertEquals("john.smith@example.org", getResult.getEmail());
     }
 
-    private User createUser() {
+    User createUser() {
         User user = new User();
         user.setEmail("jane.doe@example.org");
         user.setId(1L);

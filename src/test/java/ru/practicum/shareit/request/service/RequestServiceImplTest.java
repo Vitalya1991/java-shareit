@@ -31,16 +31,16 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 class RequestServiceImplTest {
     @MockBean
-    private ItemJpaRepository itemJpaRepository;
+    ItemJpaRepository itemJpaRepository;
 
     @MockBean
-    private ItemRequestJpaRepository itemRequestJpaRepository;
+    ItemRequestJpaRepository itemRequestJpaRepository;
 
     @Autowired
-    private RequestServiceImpl requestServiceImpl;
+    RequestServiceImpl requestServiceImpl;
 
     @MockBean
-    private UserJpaRepository userJpaRepository;
+    UserJpaRepository userJpaRepository;
 
     @Test
     void testPostNewItemRequest() {
@@ -235,9 +235,6 @@ class RequestServiceImplTest {
         verify(itemRequestJpaRepository).findAllByRequesterId((Long) any(), (Sort) any());
     }
 
-    /**
-     * Method under test: {@link RequestServiceImpl#getItemRequestByRequesterId(Long)}
-     */
     @Test
     void testGetItemRequestByRequesterIdSixth() {
         when(userJpaRepository.existsById((Long) any())).thenReturn(true);
@@ -677,7 +674,7 @@ class RequestServiceImplTest {
         verify(request).setRequester((User) any());
     }
 
-    private User createUser() {
+    User createUser() {
         User user = new User();
         user.setEmail("jane.doe@example.org");
         user.setId(1L);
@@ -685,7 +682,7 @@ class RequestServiceImplTest {
         return user;
     }
 
-    private Request createRequest(User user) {
+    Request createRequest(User user) {
         Request request = new Request();
         request.setDateTimeOfCreate(LocalDateTime.of(1, 1, 1, 1, 1));
         request.setDescription("The characteristics of someone or something");

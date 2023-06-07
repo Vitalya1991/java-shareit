@@ -26,10 +26,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 class ItemControllerTest {
     @Autowired
-    private ItemController itemController;
+    ItemController itemController;
 
     @MockBean
-    private ItemService itemService;
+    ItemService itemService;
 
     @Test
     void testUpdateItem() throws Exception {

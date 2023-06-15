@@ -20,6 +20,7 @@ public interface BookingJpaRepository extends JpaRepository<Booking, Long> {
     List<Booking> findBookingByBookerIdAndStartIsBeforeAndEndIsBeforeOrderByEndDesc(@Param("bookerId") Long userId,
                                                                                     @Param("time") LocalDateTime time1,
                                                                                     @Param("time") LocalDateTime time2, Pageable pageable);
+
     List<Booking> findBookingByBookerIdAndStartIsAfter(@Param("bookerId") Long userId, @Param("time") LocalDateTime now, Pageable pageable);
 
     List<Booking> findBookingByBookerIdAndStatusEquals(@Param("bookerId") Long userId, @Param("status") Booking.Status status, Pageable pageable);

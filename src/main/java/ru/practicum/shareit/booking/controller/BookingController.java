@@ -8,6 +8,7 @@ import ru.practicum.shareit.booking.service.BookingService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 @RestController
 @RequestMapping("/bookings")
@@ -24,7 +25,7 @@ public class BookingController {
     }
 
     @PatchMapping("/{bookingId}")
-    public BookingResponseDto updateBooking(@Positive @RequestHeader(header) Long userId,
+    public BookingResponseDto updateBooking(@RequestHeader(header) Long userId,
                                             @Positive @PathVariable Long bookingId,
                                             @RequestParam Boolean approved) {
         return bookingServiceImpl.updateBooking(userId, bookingId, approved);
@@ -36,17 +37,21 @@ public class BookingController {
         return bookingServiceImpl.getBookingOnlyForOwnerOrBooker(userId, bookingId);
     }
 
+
     @GetMapping
-    public Iterable<BookingResponseDto> getBookingsByUserId(
-            @Positive @RequestHeader(header) Long userId,
-            @RequestParam(defaultValue = "ALL") String state) {
-        return bookingServiceImpl.getBookingsByUserId(userId, state);
+    public Iterable<BookingResponseDto> getBookingsByUserId(@RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
+                                                            @Positive @RequestParam(defaultValue = "10") Integer size,
+                                                            @Positive @RequestHeader(header) Long userId,
+                                                            @RequestParam(defaultValue = "ALL") String state) {
+        return bookingServiceImpl.getBookingsByUserId(userId, state, from, size);
     }
 
     @GetMapping("/owner")
     public Iterable<BookingResponseDto> getBookingsByOwnerId(
+            @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
+            @Positive @RequestParam(defaultValue = "10") Integer size,
             @Positive @RequestHeader(header) Long userId,
             @RequestParam(defaultValue = "ALL") String state) {
-        return bookingServiceImpl.getBookingsByOwnerId(userId, state);
+        return bookingServiceImpl.getBookingsByOwnerId(from, size, userId, state);
     }
 }

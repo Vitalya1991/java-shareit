@@ -14,6 +14,7 @@ import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.CommentJpaRepository;
 import ru.practicum.shareit.item.repository.ItemJpaRepository;
+import ru.practicum.shareit.request.repository.ItemRequestJpaRepository;
 import ru.practicum.shareit.user.exceptions.UserNotFoundException;
 import ru.practicum.shareit.user.repository.UserJpaRepository;
 
@@ -36,9 +37,14 @@ public class ItemStorageImpl implements ItemStorage {
 
     private final CommentJpaRepository commentJpaRepository;
 
+    private final ItemRequestJpaRepository itemRequestJpaRepository;
+
     @Override
     public ItemResponseDto addItem(ItemRequestDto itemRequestDto, Long userId) {
         Item item = ItemMapper.toItem(itemRequestDto);
+        if (itemRequestDto.getRequestId() != null) {
+            item.setRequest(itemRequestJpaRepository.getReferenceById(itemRequestDto.getRequestId()));
+        }
         checkUserExistsById(userId);
         item.setOwner(userJpaRepository.getReferenceById(userId));
 
@@ -66,20 +72,20 @@ public class ItemStorageImpl implements ItemStorage {
         checkItemExistsById(itemId);
         log.debug("Получен предмет с id = {} пользователем с id = {}", itemId, userId);
         Item item = itemJpaRepository.getReferenceById(itemId);
+
         if (item.getOwner().getId().equals(userId)) {
+            Booking lastBooking = bookingJpaRepository
+                    .findFirstByItemIdAndEndIsBeforeOrderByEndDesc(item.getId(), LocalDateTime.now().plusHours(1))
+                    .orElse(null);
+            if (lastBooking != null && lastBooking.getStatus() == REJECTED) {
+                lastBooking = null;
+            }
             Booking nextBooking = bookingJpaRepository
                     .findFirstByItemIdAndStartIsAfterOrderByStart(item.getId(), LocalDateTime.now())
                     .orElse(null);
             if (nextBooking != null && nextBooking.getStatus() == REJECTED) {
                 nextBooking = null;
             }
-            Booking lastBooking = bookingJpaRepository
-                    .findFirstByItemIdAndStartIsBeforeOrderByEndDesc(item.getId(), LocalDateTime.now())
-                    .orElse(null);
-            if (lastBooking != null && lastBooking.getStatus() == REJECTED) {
-                lastBooking = null;
-            }
-
             return ItemMapper.toItemWithBookingsResponseDto(item,
                     lastBooking,
                     nextBooking,

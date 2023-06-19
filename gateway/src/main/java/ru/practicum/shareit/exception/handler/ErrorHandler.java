@@ -73,13 +73,13 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse httpClientErrorExceptionNotFoundHandler(final WebClientResponseException.NotFound ex) {
 
-        return WebClientResponseExceptionEx.WebClientException(ex);
+        return WebClientResponseExceptionEx.webClientResponseException(ex);
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse httpClientErrorExceptionBadRequestHandler(final WebClientResponseException.BadRequest ex) {
-        return WebClientResponseExceptionEx.WebClientException(ex);
+        return WebClientResponseExceptionEx.webClientResponseException(ex);
     }
 
     @ExceptionHandler
@@ -131,7 +131,7 @@ public class ErrorHandler {
 
     public static final class WebClientResponseExceptionEx {
 
-        public static ErrorResponse WebClientException(final WebClientResponseException ex) {
+        public static ErrorResponse webClientResponseException(final WebClientResponseException ex) {
             ErrorResponse errorResponse;
             try {
                 errorResponse = ErrorResponse.getFromJson(ex.getResponseBodyAsString(UTF_8));

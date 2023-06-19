@@ -41,7 +41,7 @@ public class ItemRequestClient {
 
     public ItemRequestResponseDto getItemRequestById(@Valid Long itemRequestId, Long userId) {
         return client.get()
-                .uri("{/requests/id}", itemRequestId)
+                .uri("/requests/{id}", itemRequestId)
                 .header(HttpHeadersConstants.X_SHARER_USER_ID, userId.toString())
                 .retrieve()
                 .bodyToMono(ItemRequestResponseDto.class)

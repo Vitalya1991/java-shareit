@@ -72,27 +72,14 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse httpClientErrorExceptionNotFoundHandler(final WebClientResponseException.NotFound ex) {
-        ErrorResponse errorResponse;
-        try {
-            errorResponse = ErrorResponse.getFromJson(ex.getResponseBodyAsString(UTF_8));
-        } catch (JsonProcessingException jsonEx) {
-            errorResponse = ErrorResponse.getFromException(ex);
-        }
-        log.error("[SEARCH ERROR]: {}.", errorResponse.getError(), ex);
-        return errorResponse;
+
+        return WebClientResponseExceptionEx.WebClientResponseException(ex);
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse httpClientErrorExceptionBadRequestHandler(final WebClientResponseException.BadRequest ex) {
-        ErrorResponse errorResponse;
-        try {
-            errorResponse = ErrorResponse.getFromJson(ex.getResponseBodyAsString(UTF_8));
-        } catch (JsonProcessingException jsonEx) {
-            errorResponse = ErrorResponse.getFromException(ex);
-        }
-        log.error("[SEARCH ERROR]: {}.", errorResponse.getError(), ex);
-        return errorResponse;
+        return WebClientResponseExceptionEx.WebClientResponseException(ex);
     }
 
     @ExceptionHandler
@@ -141,4 +128,23 @@ public class ErrorHandler {
             return objectMapper.readValue(json, ErrorResponse.class);
         }
     }
+
+    public static final class WebClientResponseExceptionEx {
+
+        public static ErrorResponse WebClientResponseException(final WebClientResponseException ex) {
+            ErrorResponse errorResponse;
+            try {
+                errorResponse = ErrorResponse.getFromJson(ex.getResponseBodyAsString(UTF_8));
+            } catch (JsonProcessingException jsonEx) {
+                errorResponse = ErrorResponse.getFromException(ex);
+            }
+            log.error("[SEARCH ERROR]: {}.", errorResponse.getError(), ex);
+            return errorResponse;
+        }
+
+        ;
+
+
+    }
+
 }

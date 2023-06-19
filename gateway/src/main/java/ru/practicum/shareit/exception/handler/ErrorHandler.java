@@ -78,7 +78,7 @@ public class ErrorHandler {
         } catch (JsonProcessingException jsonEx) {
             errorResponse = ErrorResponse.getFromException(ex);
         }
-        log.error("[SEARCH ERROR]: {}.", errorResponse.getError());
+        log.error("[SEARCH ERROR]: {}.", errorResponse.getError(), ex);
         return errorResponse;
     }
 
@@ -91,7 +91,7 @@ public class ErrorHandler {
         } catch (JsonProcessingException jsonEx) {
             errorResponse = ErrorResponse.getFromException(ex);
         }
-        log.error("[SEARCH ERROR]: {}.", errorResponse.getError());
+        log.error("[SEARCH ERROR]: {}.", errorResponse.getError(), ex);
         return errorResponse;
     }
 
@@ -104,7 +104,7 @@ public class ErrorHandler {
         } catch (JsonProcessingException jsonEx) {
             errorResponse = ErrorResponse.getFromException(ex);
         }
-        log.error("[DATABASE ERROR]: {}.", errorResponse.getError());
+        log.error("[DATABASE ERROR]: {}.", errorResponse.getError(), ex);
         return errorResponse;
     }
 
